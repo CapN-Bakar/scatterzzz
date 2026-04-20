@@ -1,0 +1,259 @@
+/* src/styles/wallet.css */
+
+.wallet-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 640px) {
+  .wallet-grid { grid-template-columns: 1fr; }
+}
+
+/* Balance hero card */
+.balance-hero {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, #1a1500, #2a2000, #1a1500);
+  border: 1px solid var(--gold-dark);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(245,197,24,0.1), var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+  animation: fadeInScale 0.4s ease both;
+}
+
+.balance-hero::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle at 50% 50%, rgba(245,197,24,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.balance-hero__amount {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  color: var(--gold);
+  text-shadow: 0 0 30px rgba(245,197,24,0.6);
+  line-height: 1;
+  margin: 0.5rem 0;
+}
+
+.balance-hero__label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+}
+
+.balance-hero__php {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+
+/* Buy chips card */
+.buy-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  animation: fadeIn 0.4s ease 0.1s both;
+}
+
+.buy-card h3 {
+  margin-bottom: 1.25rem;
+  color: var(--gold);
+}
+
+.php-presets {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.php-preset {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.4rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.php-preset:hover,
+.php-preset.selected {
+  border-color: var(--gold);
+  background: rgba(245,197,24,0.08);
+  color: var(--gold);
+}
+
+.php-preset__php {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.php-preset__chips {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+.php-preset.selected .php-preset__chips { color: var(--gold-dark); }
+
+/* GCash modal */
+.gcash-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: fadeIn 0.2s ease both;
+}
+
+.gcash-modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+  animation: fadeInScale 0.25s ease both;
+}
+
+.gcash-modal__header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.gcash-logo {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #007aff, #0055cc);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.gcash-modal__title { font-family: var(--font-display); font-size: 1.1rem; }
+.gcash-modal__sub { font-size: 0.8rem; color: var(--text-muted); }
+
+.gcash-summary {
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.gcash-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  padding: 0.3rem 0;
+}
+
+.gcash-row strong { color: var(--gold); }
+
+.gcash-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  font-weight: 700;
+  border-top: 1px solid var(--border);
+  padding-top: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.gcash-steps {
+  margin-bottom: 1.25rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.gcash-steps li { margin-bottom: 0.25rem; }
+
+.gcash-phone {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 0.75rem;
+}
+
+/* Transaction history */
+.tx-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  animation: fadeIn 0.4s ease 0.2s both;
+}
+
+.tx-card__header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 1rem;
+}
+
+.tx-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.85rem 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  font-size: 0.85rem;
+  transition: background var(--transition);
+}
+
+.tx-row:last-child { border-bottom: none; }
+.tx-row:hover { background: var(--bg-glass); }
+
+.tx-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.tx-icon--deposit { background: rgba(57,255,20,0.12); }
+.tx-icon--win     { background: rgba(245,197,24,0.12); }
+.tx-icon--bet     { background: rgba(220,20,60,0.12); }
+.tx-icon--bonus   { background: rgba(0,207,255,0.12); }
+
+.tx-desc { color: var(--text-muted); font-size: 0.8rem; }
+.tx-date { font-size: 0.75rem; color: var(--text-dim); }
+.tx-amount { font-weight: 700; }
+.tx-amount.positive { color: var(--neon-green); }
+.tx-amount.negative { color: #ff6b8a; }
+
+.tx-empty {
+  padding: 2rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}

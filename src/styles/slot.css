@@ -1,0 +1,376 @@
+/* src/styles/slot.css */
+/* ═══════════════════════════════════════════════════════════
+   Shared slot machine styles.
+   Each game overrides --slot-bg, --slot-accent, --slot-glow
+   with its own theme variables.
+═══════════════════════════════════════════════════════════ */
+
+/* ── Game Page Layout ─────────────────────────────────── */
+.game-page {
+  min-height: 100vh;
+  padding: 80px 1.5rem 3rem;
+  background: var(--slot-bg-gradient, var(--bg-deep));
+}
+
+.game-page__inner {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* ── Game Header ──────────────────────────────────────── */
+.game-header {
+  text-align: center;
+  padding: 1.5rem 0 2rem;
+}
+
+.game-header h1 {
+  color: var(--slot-accent, var(--gold));
+  text-shadow: 0 0 30px var(--slot-glow, rgba(245,197,24,0.5));
+  margin-bottom: 0.5rem;
+}
+
+.game-header p { color: var(--text-muted); font-size: 0.9rem; }
+
+/* ── Slot Machine Cabinet ─────────────────────────────── */
+.slot-machine {
+  background: var(--bg-card);
+  border: 2px solid var(--slot-accent, var(--border-glow));
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow:
+    0 0 40px var(--slot-glow, rgba(245,197,24,0.15)),
+    var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+  animation: fadeInScale 0.4s ease both;
+}
+
+/* Decorative shimmer strip at top */
+.slot-machine::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--slot-accent, var(--gold)),
+    var(--slot-accent, var(--gold)),
+    transparent
+  );
+  animation: shimmer 2s linear infinite;
+  background-size: 200% auto;
+}
+
+/* ── Reels Container ──────────────────────────────────── */
+.reels-container {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: rgba(0,0,0,0.35);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Individual reel */
+.reel {
+  width: 120px;
+  height: 120px;
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.5rem;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  position: relative;
+  transition: border-color 0.3s;
+}
+
+.reel.spinning {
+  border-color: var(--slot-accent, var(--gold));
+  box-shadow: 0 0 16px var(--slot-glow, rgba(245,197,24,0.3));
+}
+
+/* Spinning animation — symbol blurs upward */
+.reel__symbol {
+  display: block;
+  line-height: 1;
+  transition: transform 0.3s;
+}
+
+.reel.spinning .reel__symbol {
+  animation: reelBlur 0.12s linear infinite;
+}
+
+@keyframes reelBlur {
+  0%   { transform: translateY(-100%) scale(0.8); opacity: 0.3; }
+  50%  { transform: translateY(0)    scale(1);   opacity: 1; }
+  100% { transform: translateY(100%) scale(0.8); opacity: 0.3; }
+}
+
+/* Win flash on the reel */
+.reel.win-flash {
+  animation: winFlash 0.4s ease 3;
+  border-color: var(--slot-accent, var(--gold));
+}
+
+@keyframes winFlash {
+  0%, 100% { background: var(--bg-surface); }
+  50%       { background: rgba(245,197,24,0.15); }
+}
+
+/* ── Win Banner ───────────────────────────────────────── */
+.win-banner {
+  text-align: center;
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+  animation: slideUp 0.4s ease both;
+}
+
+.win-banner--jackpot {
+  background: linear-gradient(135deg, rgba(245,197,24,0.15), rgba(245,197,24,0.05));
+  border: 1px solid var(--gold);
+}
+
+.win-banner--win {
+  background: rgba(57,255,20,0.08);
+  border: 1px solid rgba(57,255,20,0.3);
+}
+
+.win-banner--lose {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.win-banner__label {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  margin-bottom: 0.25rem;
+}
+
+.win-banner--jackpot .win-banner__label {
+  color: var(--gold);
+  animation: glow-pulse 1s ease infinite;
+}
+
+.win-banner--win .win-banner__label { color: var(--neon-green); }
+.win-banner--lose .win-banner__label { color: var(--text-muted); }
+
+.win-banner__amount {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Coin rain particles */
+.coin-particle {
+  position: absolute;
+  font-size: 1.4rem;
+  pointer-events: none;
+  animation: coinRain 1s ease-out forwards;
+  z-index: 10;
+}
+
+/* ── Controls ─────────────────────────────────────────── */
+.slot-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.bet-control {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(0,0,0,0.2);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+}
+
+.bet-control__label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.bet-control__amount {
+  flex: 1;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--slot-accent, var(--gold));
+}
+
+.bet-control__amount span { font-size: 0.75rem; color: var(--text-muted); }
+
+.bet-btns {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.bet-btn {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  padding: 0.3rem 0.6rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  transition: all var(--transition);
+}
+
+.bet-btn:hover:not(:disabled) {
+  border-color: var(--slot-accent, var(--gold));
+  color: var(--slot-accent, var(--gold));
+  background: rgba(245,197,24,0.06);
+}
+
+/* SPIN button */
+.spin-btn {
+  width: 100%;
+  padding: 1.1rem;
+  font-size: 1.2rem;
+  font-family: var(--font-display);
+  letter-spacing: 0.12em;
+  border: none;
+  border-radius: var(--radius-md);
+  background: linear-gradient(
+    135deg,
+    var(--slot-btn-from, var(--gold-dark)),
+    var(--slot-btn-to, var(--gold))
+  );
+  color: var(--slot-btn-text, #1a1100);
+  cursor: pointer;
+  font-weight: 900;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+
+.spin-btn:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--slot-glow, rgba(245,197,24,0.4));
+}
+
+.spin-btn:not(:disabled):active { transform: translateY(0); }
+
+.spin-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* Ripple on click */
+.spin-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.12);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.spin-btn:not(:disabled):active::after { opacity: 1; }
+
+/* ── Paytable ─────────────────────────────────────────── */
+.paytable {
+  margin-top: 2rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.paytable__header {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 0.5rem;
+}
+
+.paytable__row {
+  padding: 0.65rem 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.85rem;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  transition: background var(--transition);
+}
+
+.paytable__row:last-child { border-bottom: none; }
+.paytable__row:hover { background: var(--bg-glass); }
+
+.paytable__symbols { font-size: 1.1rem; letter-spacing: 0.1em; }
+.paytable__label { color: var(--text-muted); }
+.paytable__multi { font-weight: 700; color: var(--slot-accent, var(--gold)); }
+
+/* ── Recent History ───────────────────────────────────── */
+.game-history {
+  margin-top: 1.5rem;
+}
+
+.game-history__title {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  animation: slideUp 0.3s ease both;
+}
+
+.history-item__symbols { font-size: 1rem; letter-spacing: 0.1em; flex: 1; }
+.history-item__bet { color: var(--text-muted); white-space: nowrap; }
+.history-item__payout { font-weight: 700; white-space: nowrap; }
+.history-item__payout.win  { color: var(--neon-green); }
+.history-item__payout.lose { color: var(--text-dim); }
+.history-item__payout.jackpot { color: var(--gold); }
+
+/* ── Back link ────────────────────────────────────────── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  transition: color var(--transition);
+}
+.back-link:hover { color: var(--text-primary); }
+
+/* ── Responsive ───────────────────────────────────────── */
+@media (max-width: 480px) {
+  .reel { width: 88px; height: 88px; font-size: 2.8rem; }
+  .reels-container { gap: 0.5rem; padding: 0.75rem; }
+  .slot-machine { padding: 1.25rem; }
+}

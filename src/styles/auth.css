@@ -1,0 +1,77 @@
+/* src/styles/auth.css */
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% -10%, rgba(245,197,24,0.12) 0%, transparent 70%),
+    var(--bg-deep);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  box-shadow: var(--shadow-card), 0 0 60px rgba(245,197,24,0.08);
+  animation: fadeInScale 0.4s ease both;
+}
+
+.auth-logo {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.auth-logo h1 {
+  font-size: 2.2rem;
+  color: var(--gold);
+  text-shadow: 0 0 30px rgba(245,197,24,0.6);
+  line-height: 1.1;
+}
+
+.auth-logo p {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.auth-form .btn { width: 100%; margin-top: 0.5rem; }
+
+.auth-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.auth-footer a {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.auth-footer a:hover { text-decoration: underline; }
+
+/* Bonus info banner */
+.auth-bonus {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(245,197,24,0.06);
+  border: 1px dashed rgba(245,197,24,0.2);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  color: var(--gold-light);
+  margin-bottom: 0.5rem;
+}
