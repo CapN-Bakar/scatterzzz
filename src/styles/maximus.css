@@ -1,0 +1,569 @@
+/* src/styles/maximus.css */
+/* ═══════════════════════════════════════════════════════════════
+   MAXIMUS — Zeus / Lightning Theme
+   Palette: electric gold, storm grey, deep midnight blue
+   Font feel: powerful, mythic, electric
+═══════════════════════════════════════════════════════════════ */
+
+:root {
+  --zeus-bg:       #06060f;
+  --zeus-sky:      #0d0d2b;
+  --zeus-gold:     #f5c518;
+  --zeus-electric: #7df9ff;
+  --zeus-storm:    #1a1a3a;
+  --zeus-accent:   #c0a000;
+  --zeus-glow:     rgba(125,249,255,0.3);
+  --zeus-danger:   #ff4d00;
+}
+
+/* ── Page Layout ─────────────────────────────────────────────── */
+.maximus-page {
+  min-height: 100vh;
+  padding: 72px 1rem 3rem;
+  background:
+    radial-gradient(ellipse 100% 60% at 50% -10%,
+      rgba(125,249,255,0.08) 0%,
+      rgba(30,30,80,0.5) 40%,
+      transparent 70%),
+    linear-gradient(180deg, #06060f 0%, #0d0d2b 50%, #06060f 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated storm clouds in background */
+.maximus-page::before {
+  content: '';
+  position: fixed;
+  top: 0; left: -10%; right: -10%;
+  height: 30%;
+  background: 
+    radial-gradient(ellipse 40% 60% at 25% 50%, rgba(30,30,70,0.8) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 70% at 75% 30%, rgba(20,20,60,0.6) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: cloudDrift 20s ease-in-out infinite alternate;
+}
+
+@keyframes cloudDrift {
+  from { transform: translateX(0); }
+  to   { transform: translateX(30px); }
+}
+
+.maximus-page__inner {
+  max-width: 720px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Header ──────────────────────────────────────────────────── */
+.maximus-header {
+  text-align: center;
+  padding: 1rem 0 2rem;
+}
+
+.maximus-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  background: linear-gradient(135deg, #fff 10%, var(--zeus-gold) 40%, var(--zeus-electric) 70%, #fff 90%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.08em;
+  filter: drop-shadow(0 0 20px rgba(125,249,255,0.4));
+  animation: titleGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+  from { filter: drop-shadow(0 0 15px rgba(125,249,255,0.3)); }
+  to   { filter: drop-shadow(0 0 40px rgba(125,249,255,0.7)); }
+}
+
+.maximus-subtitle {
+  color: rgba(125,249,255,0.6);
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-top: 0.4rem;
+}
+
+/* ── Grid Cabinet ────────────────────────────────────────────── */
+.maximus-cabinet {
+  background:
+    linear-gradient(135deg, rgba(30,30,70,0.9), rgba(10,10,30,0.95));
+  border: 1px solid rgba(125,249,255,0.2);
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow:
+    0 0 60px rgba(125,249,255,0.08),
+    0 0 0 1px rgba(125,249,255,0.05),
+    inset 0 1px 0 rgba(255,255,255,0.06),
+    0 20px 60px rgba(0,0,0,0.7);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Electric top strip */
+.maximus-cabinet::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--zeus-electric) 30%,
+    var(--zeus-gold) 50%,
+    var(--zeus-electric) 70%,
+    transparent 100%
+  );
+  animation: electricSweep 2s linear infinite;
+}
+
+@keyframes electricSweep {
+  0%   { opacity: 0.4; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.4; }
+}
+
+/* ── 5x5 Grid ────────────────────────────────────────────────── */
+.maximus-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+/* ── Individual Tile ─────────────────────────────────────────── */
+.maximus-tile {
+  aspect-ratio: 1;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(1.4rem, 3.5vw, 2rem);
+  position: relative;
+  cursor: default;
+  transition: transform 0.15s, box-shadow 0.2s;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  user-select: none;
+  overflow: hidden;
+}
+
+/* Idle hover */
+.maximus-tile:hover { transform: scale(1.04); }
+
+/* States */
+.maximus-tile[data-state='matched'] {
+  animation: tileMatchPulse 0.5s ease forwards;
+  border-color: var(--zeus-electric);
+  box-shadow:
+    0 0 16px rgba(125,249,255,0.6),
+    inset 0 0 8px rgba(125,249,255,0.2);
+}
+
+.maximus-tile[data-state='falling'],
+.maximus-tile[data-state='new'] {
+  animation: tileFall 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+.maximus-tile[data-state='wild'] {
+  background: linear-gradient(135deg, rgba(245,197,24,0.2), rgba(255,100,0,0.1));
+  border-color: var(--zeus-gold);
+  box-shadow: 0 0 20px rgba(245,197,24,0.5);
+  animation: wildPulse 1s ease infinite;
+}
+
+.maximus-tile[data-state='scatter-glow'] {
+  border-color: var(--zeus-electric);
+  box-shadow: 0 0 24px var(--zeus-glow);
+  animation: scatterGlow 1.5s ease infinite;
+}
+
+@keyframes tileMatchPulse {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.15); background: rgba(125,249,255,0.25); }
+  60%  { transform: scale(0.9); }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+@keyframes tileFall {
+  from { transform: translateY(-40px) scale(0.8); opacity: 0; }
+  to   { transform: translateY(0) scale(1);        opacity: 1; }
+}
+
+@keyframes wildPulse {
+  0%, 100% { box-shadow: 0 0 12px rgba(245,197,24,0.4); }
+  50%       { box-shadow: 0 0 30px rgba(245,197,24,0.8), 0 0 60px rgba(245,197,24,0.2); }
+}
+
+@keyframes scatterGlow {
+  0%, 100% { box-shadow: 0 0 10px rgba(125,249,255,0.3); }
+  50%       { box-shadow: 0 0 30px rgba(125,249,255,0.8); }
+}
+
+/* ── Lightning Strike Overlay ────────────────────────────────── */
+.lightning-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.lightning-strike {
+  position: absolute;
+  font-size: 2rem;
+  animation: strikeFlash 0.6s ease forwards;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 0 12px var(--zeus-electric));
+}
+
+@keyframes strikeFlash {
+  0%   { opacity: 0; transform: translate(-50%, -80%) scale(2); }
+  20%  { opacity: 1; transform: translate(-50%, -50%) scale(1.5); }
+  60%  { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -20%) scale(0.5); }
+}
+
+/* Full-screen lightning flash for bonus */
+.lightning-flash-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(125,249,255,0.15);
+  pointer-events: none;
+  z-index: 50;
+  animation: fullFlash 0.4s ease forwards;
+}
+
+@keyframes fullFlash {
+  0%   { opacity: 0; }
+  20%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ── Zeus Bonus Banner ───────────────────────────────────────── */
+.zeus-bonus-banner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  text-align: center;
+  pointer-events: none;
+  animation: zeusBannerIn 0.4s ease both;
+}
+
+.zeus-bonus-banner__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  background: linear-gradient(135deg, var(--zeus-gold), var(--zeus-electric));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+  filter: drop-shadow(0 0 20px var(--zeus-electric));
+  white-space: nowrap;
+}
+
+.zeus-bonus-banner__sub {
+  color: var(--zeus-electric);
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+}
+
+@keyframes zeusBannerIn {
+  from { opacity: 0; transform: translate(-50%, -60%) scale(0.8); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* ── Controls ────────────────────────────────────────────────── */
+.maximus-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.maximus-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.maximus-stat {
+  text-align: center;
+  flex: 1;
+  min-width: 80px;
+}
+
+.maximus-stat__value {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--zeus-electric);
+}
+
+.maximus-stat__label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.35);
+  margin-top: 0.15rem;
+}
+
+/* Multiplier badge */
+.multiplier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(245,197,24,0.12);
+  border: 1px solid rgba(245,197,24,0.3);
+  border-radius: 999px;
+  padding: 0.3rem 0.8rem;
+  font-weight: 800;
+  color: var(--zeus-gold);
+  font-size: 0.9rem;
+  animation: multiplierPop 0.3s ease;
+}
+
+@keyframes multiplierPop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* Cascade chain indicator */
+.cascade-chain {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  justify-content: center;
+}
+
+.cascade-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  transition: background 0.3s, transform 0.3s;
+}
+
+.cascade-dot.active {
+  background: var(--zeus-electric);
+  transform: scale(1.3);
+  box-shadow: 0 0 8px var(--zeus-glow);
+}
+
+/* SPIN button */
+.maximus-spin-btn {
+  width: 100%;
+  padding: 1.1rem;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  letter-spacing: 0.1em;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 900;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0a0a30, #1a1a50, #0a0a30);
+  border: 1px solid rgba(125,249,255,0.3);
+  color: var(--zeus-electric);
+  text-shadow: 0 0 20px var(--zeus-electric);
+  transition: all 0.2s;
+}
+
+.maximus-spin-btn:not(:disabled):hover {
+  background: linear-gradient(135deg, #0d0d40, #222270, #0d0d40);
+  border-color: var(--zeus-electric);
+  box-shadow: 0 0 30px rgba(125,249,255,0.25), 0 6px 20px rgba(0,0,0,0.5);
+  transform: translateY(-2px);
+}
+
+.maximus-spin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Ripple effect on button */
+.maximus-spin-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+    transparent, rgba(125,249,255,0.1), transparent);
+  transform: translateX(-100%);
+  transition: none;
+}
+.maximus-spin-btn:not(:disabled):hover::after {
+  animation: btnSweep 0.6s ease forwards;
+}
+
+@keyframes btnSweep {
+  to { transform: translateX(100%); }
+}
+
+/* ── Bet Control ─────────────────────────────────────────────── */
+.bet-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 10px;
+  padding: 0.6rem 0.9rem;
+  flex-wrap: wrap;
+}
+
+.bet-row__label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.35);
+  white-space: nowrap;
+}
+
+.bet-row__amount {
+  flex: 1;
+  text-align: center;
+  font-weight: 700;
+  color: var(--zeus-gold);
+  font-size: 1rem;
+}
+
+.bet-presets {
+  display: flex;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+}
+
+.bet-preset-btn {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.55);
+  border-radius: 6px;
+  padding: 0.25rem 0.55rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.bet-preset-btn:hover:not(:disabled),
+.bet-preset-btn.active {
+  border-color: var(--zeus-electric);
+  color: var(--zeus-electric);
+  background: rgba(125,249,255,0.06);
+}
+
+.bet-preset-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ── Result Banner ───────────────────────────────────────────── */
+.result-banner {
+  text-align: center;
+  padding: 1rem;
+  border-radius: 10px;
+  animation: slideUp 0.4s ease both;
+  margin-bottom: 0.5rem;
+}
+
+.result-banner.win {
+  background: rgba(125,249,255,0.06);
+  border: 1px solid rgba(125,249,255,0.2);
+}
+.result-banner.jackpot {
+  background: rgba(245,197,24,0.08);
+  border: 1px solid rgba(245,197,24,0.4);
+  animation: slideUp 0.4s ease both, winPulse 0.5s ease 3;
+}
+.result-banner.lose {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.result-banner__label {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  margin-bottom: 0.2rem;
+}
+
+.result-banner.win    .result-banner__label { color: var(--zeus-electric); }
+.result-banner.jackpot .result-banner__label { color: var(--zeus-gold); }
+.result-banner.lose   .result-banner__label { color: rgba(255,255,255,0.3); }
+
+.result-banner__amount { font-size: 0.9rem; color: rgba(255,255,255,0.6); }
+
+/* ── Phase indicator ─────────────────────────────────────────── */
+.phase-indicator {
+  text-align: center;
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  min-height: 1.2em;
+  transition: all 0.3s;
+}
+
+.phase-indicator.active {
+  color: var(--zeus-electric);
+  animation: phasePulse 1s ease infinite;
+}
+
+@keyframes phasePulse {
+  0%, 100% { opacity: 0.7; }
+  50%       { opacity: 1; }
+}
+
+/* ── History ─────────────────────────────────────────────────── */
+.maximus-history {
+  margin-top: 1.5rem;
+}
+
+/* ── Paytable ────────────────────────────────────────────────── */
+.maximus-paytable {
+  margin-top: 1.5rem;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.maximus-paytable__header {
+  padding: 0.7rem 1rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.3);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 0.75rem;
+}
+
+.maximus-paytable__row {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  font-size: 0.82rem;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  align-items: center;
+  transition: background 0.2s;
+}
+.maximus-paytable__row:last-child { border-bottom: none; }
+.maximus-paytable__row:hover { background: rgba(255,255,255,0.03); }
+
+.maximus-paytable__emoji { font-size: 1.1rem; }
+.maximus-paytable__name { color: rgba(255,255,255,0.5); font-size: 0.78rem; }
+.maximus-paytable__min { color: rgba(255,255,255,0.3); font-size: 0.75rem; }
+.maximus-paytable__value { font-weight: 700; color: var(--zeus-gold); }
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .maximus-tile { font-size: 1.2rem; border-radius: 7px; }
+  .maximus-grid { gap: 4px; }
+  .maximus-cabinet { padding: 1rem; }
+}

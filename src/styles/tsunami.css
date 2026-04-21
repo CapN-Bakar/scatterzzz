@@ -1,0 +1,568 @@
+/* src/styles/tsunami.css */
+/* ═══════════════════════════════════════════════════════════════
+   TSUNAMI — Poseidon / Ocean Theme
+   Palette: deep ocean blue, seafoam, bioluminescent teal
+   Feel: flowing, organic, powerful depth
+═══════════════════════════════════════════════════════════════ */
+
+:root {
+  --ocean-deep:   #020d1a;
+  --ocean-mid:    #041e35;
+  --ocean-bright: #0a4a7a;
+  --seafoam:      #00e5cc;
+  --wave:         #0099cc;
+  --foam:         #a8f0e8;
+  --danger-wave:  #0055ff;
+  --poseidon:     #7b2fff;
+}
+
+/* ── Page Layout ─────────────────────────────────────────────── */
+.tsunami-page {
+  min-height: 100vh;
+  padding: 72px 1rem 3rem;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -5%,
+      rgba(0,150,200,0.15) 0%, transparent 60%),
+    linear-gradient(180deg, #020d1a 0%, #041e35 60%, #020d1a 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated floating bubbles */
+.tsunami-page::before,
+.tsunami-page::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  opacity: 0.06;
+  pointer-events: none;
+  background: var(--seafoam);
+}
+.tsunami-page::before {
+  width: 300px; height: 300px;
+  top: 20%; left: 10%;
+  animation: bubbleDrift 15s ease-in-out infinite;
+}
+.tsunami-page::after {
+  width: 200px; height: 200px;
+  top: 50%; right: 8%;
+  animation: bubbleDrift 20s ease-in-out infinite reverse;
+}
+
+@keyframes bubbleDrift {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%       { transform: translateY(-40px) scale(1.1); }
+}
+
+.tsunami-page__inner {
+  max-width: 720px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Header ──────────────────────────────────────────────────── */
+.tsunami-header {
+  text-align: center;
+  padding: 1rem 0 2rem;
+}
+
+.tsunami-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  background: linear-gradient(135deg, #fff 10%, var(--seafoam) 40%, var(--wave) 70%, #fff 90%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.08em;
+  filter: drop-shadow(0 0 20px rgba(0,229,204,0.5));
+  animation: oceanTitleGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes oceanTitleGlow {
+  from { filter: drop-shadow(0 0 15px rgba(0,229,204,0.3)); }
+  to   { filter: drop-shadow(0 0 40px rgba(0,229,204,0.8)); }
+}
+
+.tsunami-subtitle {
+  color: rgba(0,229,204,0.5);
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-top: 0.4rem;
+}
+
+/* ── Water Meter ─────────────────────────────────────────────── */
+.water-meter {
+  background: rgba(0,30,50,0.8);
+  border: 1px solid rgba(0,229,204,0.15);
+  border-radius: 999px;
+  height: 24px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.water-meter__fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg,
+    rgba(0,100,180,0.9), rgba(0,229,204,0.9), rgba(0,180,255,0.9));
+  transition: width 0.6s cubic-bezier(0.34,1.56,0.64,1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated wave effect inside meter */
+.water-meter__fill::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent, rgba(255,255,255,0.25), transparent);
+  animation: meterShimmer 1.5s linear infinite;
+}
+
+@keyframes meterShimmer {
+  to { left: 100%; }
+}
+
+.water-meter__label {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.6);
+  mix-blend-mode: screen;
+}
+
+.water-meter__icon {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8rem;
+}
+
+/* Tsunami ready indicator */
+.tsunami-ready {
+  text-align: center;
+  color: var(--seafoam);
+  font-weight: 800;
+  font-size: 0.82rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  animation: readyPulse 0.8s ease infinite;
+  margin-bottom: 0.5rem;
+}
+
+@keyframes readyPulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50%       { opacity: 1; transform: scale(1.02); }
+}
+
+/* ── Grid Cabinet ────────────────────────────────────────────── */
+.tsunami-cabinet {
+  background: linear-gradient(135deg, rgba(4,30,53,0.95), rgba(2,13,26,0.98));
+  border: 1px solid rgba(0,229,204,0.15);
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow:
+    0 0 60px rgba(0,229,204,0.05),
+    0 0 0 1px rgba(0,229,204,0.04),
+    inset 0 1px 0 rgba(255,255,255,0.04),
+    0 20px 60px rgba(0,0,0,0.8);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Wave strip at top */
+.tsunami-cabinet::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent, var(--wave), var(--seafoam), var(--wave), transparent);
+  animation: waveSweep 3s ease-in-out infinite;
+}
+
+@keyframes waveSweep {
+  0%, 100% { opacity: 0.4; transform: scaleX(0.8); }
+  50%       { opacity: 1; transform: scaleX(1); }
+}
+
+/* ── 5x5 Grid ────────────────────────────────────────────────── */
+.tsunami-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+/* ── Tile ────────────────────────────────────────────────────── */
+.tsunami-tile {
+  aspect-ratio: 1;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(1.4rem, 3.5vw, 2rem);
+  position: relative;
+  transition: transform 0.15s;
+  background: rgba(0,100,160,0.08);
+  border: 1px solid rgba(0,200,200,0.06);
+  user-select: none;
+  overflow: hidden;
+}
+
+.tsunami-tile:hover { transform: scale(1.04); }
+
+/* ── Tile states ─────────────────────────────────────────────── */
+.tsunami-tile[data-state='matched'] {
+  animation: tileWash 0.6s ease forwards;
+  border-color: var(--seafoam);
+  box-shadow: 0 0 16px rgba(0,229,204,0.5);
+}
+
+.tsunami-tile[data-state='shifting'] {
+  animation: tileShift 0.5s cubic-bezier(0.25,0.46,0.45,0.94) both;
+}
+
+.tsunami-tile[data-state='new'] {
+  animation: tileWaveIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+.tsunami-tile[data-state='wild'] {
+  background: linear-gradient(135deg, rgba(123,47,255,0.2), rgba(0,229,204,0.15));
+  border-color: var(--poseidon);
+  box-shadow: 0 0 20px rgba(123,47,255,0.5);
+  animation: tridentGlow 1.2s ease infinite;
+}
+
+.tsunami-tile[data-state='poseidon'] {
+  animation: poseidonReveal 0.8s cubic-bezier(0.34,1.56,0.64,1) both;
+  border-color: var(--seafoam);
+  background: rgba(0,229,204,0.1);
+}
+
+@keyframes tileWash {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.12); background: rgba(0,229,204,0.25); }
+  60%  { transform: scale(0.92); }
+  100% { transform: scale(1); opacity: 0.3; }
+}
+
+@keyframes tileShift {
+  0%   { transform: translateX(8px); opacity: 0.7; }
+  100% { transform: translateX(0);   opacity: 1; }
+}
+
+@keyframes tileWaveIn {
+  from { transform: translateX(40px) scale(0.7); opacity: 0; }
+  to   { transform: translateX(0)    scale(1);   opacity: 1; }
+}
+
+@keyframes tridentGlow {
+  0%, 100% { box-shadow: 0 0 14px rgba(123,47,255,0.4); }
+  50%       { box-shadow: 0 0 30px rgba(123,47,255,0.8), 0 0 60px rgba(0,229,204,0.2); }
+}
+
+@keyframes poseidonReveal {
+  from { transform: scale(0) rotate(-180deg); opacity: 0; }
+  to   { transform: scale(1) rotate(0deg);    opacity: 1; }
+}
+
+/* ── Shift row indicator ─────────────────────────────────────── */
+.shift-row-glow {
+  position: absolute;
+  left: 0; right: 0;
+  height: 1fr;
+  background: rgba(0,229,204,0.06);
+  border-radius: 8px;
+  pointer-events: none;
+  animation: rowGlow 0.5s ease both;
+}
+
+@keyframes rowGlow {
+  0%   { opacity: 0; transform: scaleX(0.9); }
+  50%  { opacity: 1; }
+  100% { opacity: 0; transform: scaleX(1.02); }
+}
+
+/* ── Wave particles ──────────────────────────────────────────── */
+.wave-particle {
+  position: absolute;
+  font-size: 1rem;
+  pointer-events: none;
+  animation: waveFloat 1.2s ease-out forwards;
+  z-index: 10;
+}
+
+@keyframes waveFloat {
+  0%   { opacity: 1; transform: translateY(0) translateX(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-60px) translateX(var(--drift, 0)) scale(0.5); }
+}
+
+/* ── Tsunami Bonus Overlay ───────────────────────────────────── */
+.tsunami-bonus-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(2,13,26,0.85);
+  border-radius: 20px;
+  animation: tsunamiIn 0.5s ease both;
+}
+
+@keyframes tsunamiIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.tsunami-bonus-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 6vw, 3rem);
+  background: linear-gradient(135deg, var(--seafoam), var(--wave), var(--poseidon));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 30px var(--seafoam));
+  text-align: center;
+  line-height: 1.1;
+}
+
+.tsunami-bonus-sub {
+  color: var(--seafoam);
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-top: 0.75rem;
+  animation: tsunamiSubPulse 1s ease infinite;
+}
+
+@keyframes tsunamiSubPulse {
+  0%, 100% { opacity: 0.7; }
+  50%       { opacity: 1; }
+}
+
+/* Background wave sweep during bonus */
+.tsunami-bonus-waves {
+  position: absolute;
+  bottom: 0; left: -20%; right: -20%;
+  height: 40%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.wave-layer {
+  position: absolute;
+  bottom: 0;
+  width: 200%;
+  height: 60px;
+  background: rgba(0,229,204,0.08);
+  border-radius: 50% 50% 0 0;
+}
+.wave-layer:nth-child(1) { animation: waveCrash 2s ease infinite; }
+.wave-layer:nth-child(2) { animation: waveCrash 2.5s ease 0.5s infinite; opacity: 0.6; }
+.wave-layer:nth-child(3) { animation: waveCrash 3s ease 1s infinite; opacity: 0.3; }
+
+@keyframes waveCrash {
+  0%   { transform: translateX(0) scaleY(0.8); }
+  50%  { transform: translateX(-25%) scaleY(1.2); }
+  100% { transform: translateX(-50%) scaleY(0.8); }
+}
+
+/* ── Controls ────────────────────────────────────────────────── */
+.tsunami-controls { display: flex; flex-direction: column; gap: 1rem; }
+
+.tsunami-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.tsunami-stat {
+  text-align: center;
+  flex: 1;
+  min-width: 80px;
+}
+
+.tsunami-stat__value {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--seafoam);
+}
+
+.tsunami-stat__label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.3);
+  margin-top: 0.15rem;
+}
+
+/* Wave count display */
+.wave-count {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+}
+
+.wave-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  transition: all 0.3s;
+}
+
+.wave-dot.active {
+  background: var(--seafoam);
+  box-shadow: 0 0 8px rgba(0,229,204,0.6);
+  transform: scale(1.4);
+}
+
+/* SPIN button */
+.tsunami-spin-btn {
+  width: 100%;
+  padding: 1.1rem;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  letter-spacing: 0.1em;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 900;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #020a14, #041e35, #020a14);
+  border: 1px solid rgba(0,229,204,0.25);
+  color: var(--seafoam);
+  text-shadow: 0 0 20px var(--seafoam);
+  transition: all 0.2s;
+}
+
+.tsunami-spin-btn:not(:disabled):hover {
+  background: linear-gradient(135deg, #030f1e, #063050, #030f1e);
+  border-color: var(--seafoam);
+  box-shadow: 0 0 30px rgba(0,229,204,0.2), 0 6px 20px rgba(0,0,0,0.5);
+  transform: translateY(-2px);
+}
+
+.tsunami-spin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Bet Control (reuse maximus .bet-row styles but ocean-colored) */
+.tsunami-bet-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(0,229,204,0.03);
+  border: 1px solid rgba(0,229,204,0.07);
+  border-radius: 10px;
+  padding: 0.6rem 0.9rem;
+  flex-wrap: wrap;
+}
+
+.tsunami-bet-row .bet-preset-btn.active {
+  border-color: var(--seafoam);
+  color: var(--seafoam);
+  background: rgba(0,229,204,0.06);
+}
+
+/* ── Result Banner ───────────────────────────────────────────── */
+.tsunami-result {
+  text-align: center;
+  padding: 1rem;
+  border-radius: 10px;
+  animation: slideUp 0.4s ease both;
+  margin-bottom: 0.5rem;
+}
+.tsunami-result.win {
+  background: rgba(0,229,204,0.06);
+  border: 1px solid rgba(0,229,204,0.2);
+}
+.tsunami-result.jackpot {
+  background: rgba(123,47,255,0.1);
+  border: 1px solid rgba(123,47,255,0.35);
+}
+.tsunami-result.lose {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.04);
+}
+.tsunami-result .result-banner__label {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+}
+.tsunami-result.win    .result-banner__label { color: var(--seafoam); }
+.tsunami-result.jackpot .result-banner__label { color: #b47fff; }
+.tsunami-result.lose   .result-banner__label { color: rgba(255,255,255,0.2); }
+
+/* ── Phase text ──────────────────────────────────────────────── */
+.tsunami-phase {
+  text-align: center;
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(0,229,204,0.4);
+  min-height: 1.2em;
+}
+.tsunami-phase.active { color: var(--seafoam); animation: phasePulse 1s ease infinite; }
+
+/* ── Paytable ────────────────────────────────────────────────── */
+.tsunami-paytable {
+  margin-top: 1.5rem;
+  background: rgba(0,229,204,0.02);
+  border: 1px solid rgba(0,229,204,0.07);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.tsunami-paytable__header {
+  padding: 0.7rem 1rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(0,229,204,0.35);
+  border-bottom: 1px solid rgba(0,229,204,0.06);
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 0.75rem;
+}
+
+.tsunami-paytable__row {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  font-size: 0.82rem;
+  border-bottom: 1px solid rgba(0,229,204,0.03);
+  align-items: center;
+  transition: background 0.2s;
+}
+.tsunami-paytable__row:last-child { border-bottom: none; }
+.tsunami-paytable__row:hover { background: rgba(0,229,204,0.03); }
+
+.tsunami-paytable__emoji { font-size: 1.1rem; }
+.tsunami-paytable__name { color: rgba(255,255,255,0.4); font-size: 0.78rem; }
+.tsunami-paytable__min { color: rgba(255,255,255,0.25); font-size: 0.75rem; }
+.tsunami-paytable__value { font-weight: 700; color: var(--seafoam); }
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .tsunami-tile { font-size: 1.2rem; border-radius: 7px; }
+  .tsunami-grid { gap: 4px; }
+  .tsunami-cabinet { padding: 1rem; }
+}

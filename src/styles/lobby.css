@@ -169,3 +169,61 @@
 @media (max-width: 640px) {
   .lobby-stats { grid-template-columns: repeat(2, 1fr); }
 }
+/* ── Maximus Card Banner ───────────────────────────────────── */
+.game-card__banner--maximus {
+  background: linear-gradient(135deg, #06060f, #0d0d2b, #1a1a3e);
+  position: relative;
+  overflow: hidden;
+}
+
+.game-card__banner--maximus::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 20%, rgba(125,249,255,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 30% 80%, rgba(245,197,24,0.08) 0%, transparent 60%);
+  animation: maxStormPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes maxStormPulse {
+  from { opacity: 0.6; }
+  to   { opacity: 1; }
+}
+
+/* ── Tsunami Card Banner ──────────────────────────────────── */
+.game-card__banner--tsunami {
+  background: linear-gradient(135deg, #020d1a, #041e35, #0a3050);
+  position: relative;
+  overflow: hidden;
+}
+
+.game-card__banner--tsunami::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: -20%; right: -20%;
+  height: 40px;
+  background: rgba(0,229,204,0.06);
+  border-radius: 50% 50% 0 0;
+  animation: lobbyWave 3s ease-in-out infinite;
+}
+
+.game-card__banner--tsunami::after {
+  content: '';
+  position: absolute;
+  bottom: 10px; left: -30%; right: -30%;
+  height: 30px;
+  background: rgba(0,150,200,0.05);
+  border-radius: 50% 50% 0 0;
+  animation: lobbyWave 4s ease-in-out 0.5s infinite reverse;
+}
+
+@keyframes lobbyWave {
+  0%, 100% { transform: translateX(0) scaleY(1); }
+  50%       { transform: translateX(-15%) scaleY(1.3); }
+}
+
+/* NEW badge color override */
+.game-card__hot:has-text('NEW') {
+  background: var(--neon-blue, #00cfff);
+}
