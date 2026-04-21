@@ -227,3 +227,24 @@
 .game-card__hot:has-text('NEW') {
   background: var(--neon-blue, #00cfff);
 }
+/* Add to lobby.css — Amazon card banner */
+.game-card__banner--amazon {
+  background: linear-gradient(135deg, #060f05, #0d2009, #060f05);
+  position: relative;
+  overflow: hidden;
+}
+
+.game-card__banner--amazon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 50% 50% at 30% 30%, rgba(93,170,0,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 70% 80%, rgba(212,160,23,0.08) 0%, transparent 60%);
+  animation: amazonLeafLight 5s ease-in-out infinite alternate;
+}
+
+@keyframes amazonLeafLight {
+  from { opacity: 0.6; }
+  to   { opacity: 1; }
+}

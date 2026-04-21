@@ -1,0 +1,105 @@
+/* src/styles/game_size_fixes.css
+ * ═══════════════════════════════════════════════════════════════
+ * Board size reduction — Maximus & Tsunami
+ * Reduces overall grid ~15% by tightening max-width, tile size,
+ * gap, and padding. Import this AFTER maximus.css and tsunami.css
+ * to override with smaller values.
+ * ═══════════════════════════════════════════════════════════════ */
+
+/* ── MAXIMUS: reduce from 720px → 610px inner width ─────────── */
+.maximus-page__inner {
+  max-width: 610px;    /* was 720px, -15% */
+}
+
+.maximus-cabinet {
+  padding: 1.25rem;   /* was 1.5rem */
+}
+
+.maximus-grid {
+  gap: 5px;            /* was 6px */
+  margin-bottom: 1.25rem; /* was 1.5rem */
+}
+
+/* Tile size: controlled by aspect-ratio + grid width
+   Reducing max container width handles most of it.
+   Override font-size for the emoji only if needed. */
+.maximus-tile {
+  font-size: clamp(1.2rem, 3vw, 1.75rem);  /* was clamp(1.4rem, 3.5vw, 2rem) */
+  border-radius: 9px;   /* was 10px */
+}
+
+/* Title slightly smaller */
+.maximus-title {
+  font-size: clamp(1.7rem, 5vw, 3rem);   /* was clamp(2rem, 6vw, 3.5rem) */
+}
+
+/* ── TSUNAMI: reduce from 720px → 610px ─────────────────────── */
+.tsunami-page__inner {
+  max-width: 610px;
+}
+
+.tsunami-cabinet {
+  padding: 1.25rem;
+}
+
+.tsunami-grid {
+  gap: 5px;
+  margin-bottom: 1.25rem;
+}
+
+.tsunami-tile {
+  font-size: clamp(1.2rem, 3vw, 1.75rem);
+  border-radius: 9px;
+}
+
+.tsunami-title {
+  font-size: clamp(1.7rem, 5vw, 3rem);
+}
+
+/* Water meter: slightly less tall */
+.water-meter {
+  height: 20px;    /* was 24px */
+  margin-bottom: 1.25rem;  /* was 1.5rem */
+}
+
+/* ── Responsive overrides ─────────────────────────────────────── */
+@media (max-width: 640px) {
+  .maximus-page__inner,
+  .tsunami-page__inner {
+    max-width: 100%;
+  }
+
+  .maximus-tile,
+  .tsunami-tile {
+    font-size: clamp(1.1rem, 5.5vw, 1.5rem);
+    border-radius: 7px;
+  }
+
+  .maximus-grid,
+  .tsunami-grid {
+    gap: 4px;
+  }
+
+  .maximus-cabinet,
+  .tsunami-cabinet {
+    padding: 0.9rem;
+  }
+}
+
+/* ── Stats row spacing (more compact) ────────────────────────── */
+.maximus-info-row,
+.tsunami-info-row {
+  gap: 0.6rem;
+}
+
+.maximus-stat__value,
+.tsunami-stat__value {
+  font-size: 1.1rem;    /* was 1.3rem */
+}
+
+/* ── Spin buttons (slightly less tall) ───────────────────────── */
+.maximus-spin-btn,
+.tsunami-spin-btn {
+  padding: 0.95rem;    /* was 1.1rem */
+  font-size: 1.05rem;  /* was 1.15rem */
+}

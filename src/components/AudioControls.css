@@ -1,4 +1,4 @@
-/* src/components/AudioControls.css */
+/* src/components/AudioControls.css  (v2) */
 .audio-controls {
   position: fixed;
   bottom: 1.5rem;
@@ -7,79 +7,85 @@
 }
 
 .audio-toggle-btn {
-  width: 46px;
-  height: 46px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background: rgba(10,10,18,0.85);
-  border: 1px solid rgba(255,255,255,0.12);
-  backdrop-filter: blur(8px);
-  font-size: 1.2rem;
+  background: var(--audio-bg, rgba(10,10,18,0.88));
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  font-size: 1.15rem;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.45);
 }
+
 .audio-toggle-btn:hover {
   transform: scale(1.08);
-  border-color: rgba(255,255,255,0.25);
+  border-color: rgba(255,255,255,0.2);
 }
 
 .audio-panel {
   position: absolute;
-  bottom: 56px;
+  bottom: 52px;
   right: 0;
-  background: rgba(12,12,22,0.95);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: var(--audio-bg, rgba(12,12,22,0.95));
+  border: 1px solid rgba(255,255,255,0.09);
   border-radius: 12px;
-  padding: 1rem;
-  width: 180px;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-  animation: fadeInScale 0.2s ease both;
+  padding: 0.9rem 1rem;
+  width: 175px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  animation: fadeInScale 0.18s ease both;
 }
 
 .audio-panel__title {
-  font-size: 0.7rem;
+  font-size: 0.66rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: rgba(255,255,255,0.4);
-  margin-bottom: 0.75rem;
+  letter-spacing: 0.14em;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 0.7rem;
 }
 
 .audio-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.85rem;
-  color: rgba(255,255,255,0.75);
-  padding: 0.35rem 0;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.65);
+  padding: 0.3rem 0;
   cursor: pointer;
   user-select: none;
+  gap: 0.5rem;
 }
 
+/* Toggle switch */
 .audio-switch {
-  width: 38px;
-  height: 22px;
+  width: 36px;
+  height: 20px;
   border-radius: 999px;
   position: relative;
   cursor: pointer;
-  transition: background 0.25s;
+  transition: background 0.22s;
+  flex-shrink: 0;
 }
-.audio-switch.on  { background: var(--accent, #f5c518); }
-.audio-switch.off { background: rgba(255,255,255,0.15); }
+
+.audio-switch.on  { background: var(--switch-on, var(--audio-accent, #f5c518)); }
+.audio-switch.off { background: rgba(255,255,255,0.14); }
 
 .audio-switch__thumb {
   position: absolute;
-  top: 3px;
+  top: 2px;
   width: 16px;
   height: 16px;
   border-radius: 50%;
   background: white;
-  transition: left 0.25s;
+  transition: left 0.22s;
   box-shadow: 0 1px 4px rgba(0,0,0,0.3);
 }
-.audio-switch.on  .audio-switch__thumb { left: 19px; }
-.audio-switch.off .audio-switch__thumb { left: 3px; }
+
+.audio-switch.on  .audio-switch__thumb { left: 18px; }
+.audio-switch.off .audio-switch__thumb { left: 2px; }
